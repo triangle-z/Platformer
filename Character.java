@@ -4,6 +4,6 @@ abstract class Character{
 	
 	protected String nom;
 	protected int masse;
-	LinkedList<String> animation = new LinkedList<String>();
+	LinkedList<String> image = new LinkedList<String>();
 }
 	

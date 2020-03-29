@@ -9,8 +9,8 @@ public class Platform extends Component{
 	
 	double choc ; //combien "d'énergie" va restituer la plateforme en cas de choc
 	
-	public Platform(double xMin, double yMin, double xMax, double yMax, double aChoc) {
-		super(xMin, yMin, xMax, yMax) ;
+	public Platform(double xMin, double yMin, double width, double height, double aChoc) {
+		super(xMin, yMin, width, height) ;
 		choc = aChoc ;
 	}
 	
@@ -37,13 +37,6 @@ public class Platform extends Component{
 	}
 
 	public void dessin(Graphics g) {
-		g.setColor(Color.BLACK) ;
-		
-		double[] ptsM = {xMin, yMin} ;
-		double[] tailleM = {width, height} ;
-		
-		int[] ptsP = Conversions.metricToPixel(ptsM) ;
-		int[] tailleP = Conversions.metricToPixel(tailleM) ;
-		g.fillRect(ptsP[0], ptsP[1], tailleP[0], tailleP[1]);
+		dessineComponent(g, Color.BLACK) ;
 	}
 }

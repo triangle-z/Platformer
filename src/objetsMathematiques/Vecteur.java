@@ -137,4 +137,8 @@ public class Vecteur {
 		return produit ;
 	}
 	
+	public String toString(){
+		String res = "{x = " + x + " ; y = " + y + "}" ;
+		return res ;
+	}
 }

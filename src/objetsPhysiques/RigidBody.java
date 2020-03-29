@@ -3,7 +3,7 @@ import objetsMathematiques.Vecteur;
 import global.Global; ;
 
 public class RigidBody {
-	private Vecteur position ;
+	public Vecteur position ;
 	private double theta ;						//angle formé par le Vecteur position
 	private Vecteur vitesse ;
 	private Vecteur acceleration ;
@@ -29,7 +29,7 @@ public class RigidBody {
 		acceleration = new Vecteur(0, 0) ; //inutile de préciser une acceleration initiale
 		g = aG;
 		masse = aMasse;
-		poids = new Vecteur(0, masse * g) ;
+		poids = new Vecteur(0, - masse * g) ;
 		Cx = aCx;
 		rho = aRho;
 		surface = aSurface;
@@ -46,9 +46,15 @@ public class RigidBody {
 		majTheta() ;
 		majFrottements() ;
 		sommeDesForces = poids.sommeVect(frottements) ;
+		System.out.println("Somme des forces : " + sommeDesForces) ;
 		majAcceleration() ;
+		System.out.println("Acceleration : " + acceleration) ;
 		majVitesse() ;
+		System.out.println("Vitesse : " + vitesse) ;
 		majPosition() ;
+		System.out.println("Position : " + position) ;
+
+		System.out.println() ;
 	}
 
 	public void majTheta(){
@@ -91,6 +97,14 @@ public class RigidBody {
 		}
 		
 		vitesse.modifierComposants(newVx, newVy) ;
+	}
+	
+	public void deplaceDroite(){
+		vitesse.modifierComposants(vitesse.getX() + 10, 0) ;
+	}
+	
+	public void deplaceGauche(){
+		vitesse.modifierComposants(vitesse.getX() - 10, 0) ;
 	}
 	
 }

@@ -12,9 +12,12 @@ public class Joueur extends Component{
 		super(xMin, yMin, width, height);
 	}
 
-	public void gereCollision(boolean[] tabDetectionCollision, double choc) {
+	public void forcePlacement(double x, double y) {
 
-		rb.gereCollision(tabDetectionCollision, choc) ;
+		rb.forcePlacement(x, y);
+		
+		xMin = rb.position.getX() ;
+		yMin = rb.position.getY() ;
 		
 	}
 

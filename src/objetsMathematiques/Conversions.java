@@ -1,11 +1,8 @@
 package objetsMathematiques;
 
+import global.Global;
+
 public class Conversions {
-	
-	private static double xMinFenetreMetric = -10 ;
-	private static double yMinFenetreMetric = -10 ;
-	private static double widthFenetreMetric = 20 ;
-	private static double heightFenetreMetric = 20 ;
 
 	public static int widthFenetrePixel = 720 ;
 	public static int heightFenetrePixel = - 400 ;
@@ -14,12 +11,12 @@ public class Conversions {
 	
 	//Conversion de metric vers pixel : matrice de passage {{a,b},{c,d}} et decalage matrice {e,f}
 	
-	private static double xM1 = xMinFenetreMetric ;
-	private static double xM2 = xMinFenetreMetric ;
-	private static double xM3 = xMinFenetreMetric + widthFenetreMetric ;
-	private static double yM1 = yMinFenetreMetric ;
-	private static double yM2 = yMinFenetreMetric + heightFenetreMetric ;
-	private static double yM3 = yMinFenetreMetric + heightFenetreMetric ;
+	private static double xM1 ;
+	private static double xM2 ;
+	private static double xM3 ;
+	private static double yM1 ;
+	private static double yM2 ;
+	private static double yM3 ;
 	private static double xP1 = xMinFenetrePixel ;
 	private static double xP2 = 0 ;
 	private static double xP3 = xMinFenetrePixel + widthFenetrePixel ;
@@ -34,19 +31,15 @@ public class Conversions {
 	private static double c = (yP2 - yP1 - d * (yM2 - yM1)) / (xM2 - xM1) ;
 	private static double f = yP1 - c * xM1 - d * yM1 ;*/
 	
-	private static double b = 0 ;
-	private static double a = (double)(xP3-xP1) / (xM3-xM1) ;
-	private static double e = -xM2 ;
-	private static double d = (double)(yP3-yP1) / (yM3-yM1) ;
-	private static double c = 0 ;
-	private static double f = -yM2 ;
-	
-	private static double[][] valeursMatPassage1 = {{a,b},{c,d}} ;
-	private static double[][] valeursDecalage1 = {{e},{f}} ;
-	private static Matrice matPassage1 = new Matrice(valeursMatPassage1) ;
-	private static Matrice decalage1 = new Matrice(valeursDecalage1) ;
+	private static double[][] valeursMatPassage1 = new double[2][2] ;
+	private static double[][] valeursDecalage1 = new double [2][1] ;
+	private static Matrice matPassage1 ;
+	private static Matrice decalage1 ;
 	
 	public static int[] metricToPixel (double[] metricT){
+		
+		majMatrices() ;
+		
 		/*System.out.println(b) ;
 		System.out.println(a) ;
 		System.out.println(e) ;
@@ -76,8 +69,8 @@ public class Conversions {
 	}
 	
 	//idem de pixel vers metric
-	private static Matrice matPassage2 = matPassage1.inverse() ;
-	private static Matrice decalage2 = decalage1.multiplier(-1) ;
+	private static Matrice matPassage2 ;
+	private static Matrice decalage2 ;
 	
 	public static double[] pixelToMetric (double[] pixelT){
 		double[][] pixelT2 = {{pixelT[0]}, {pixelT[1]}} ;
@@ -85,6 +78,31 @@ public class Conversions {
 		Matrice metric = pixel.transformationAffineExterne(matPassage2, decalage2) ;
 		double[] valeurs = {metric.tab[0][0], metric.tab[1][0]} ;
 		return valeurs ;
+	}
+	
+	private static void majMatrices(){
+	
+		xM1 = Global.xMinFenetreMetric ;
+		xM2 = Global.xMinFenetreMetric ;
+		xM3 = Global.xMinFenetreMetric + Global.widthFenetreMetric ;
+		yM1 = Global.yMinFenetreMetric ;
+		yM2 = Global.yMinFenetreMetric + Global.heightFenetreMetric ;
+		yM3 = Global.yMinFenetreMetric + Global.heightFenetreMetric ;
+		
+		valeursMatPassage1[0][1] = 0 ;										//b
+		valeursMatPassage1[0][0] = (double)(xP3-xP1) / (xM3-xM1) ;			//a
+		valeursDecalage1  [0][0] = -xM2 ;									//e
+		valeursMatPassage1[1][1] = (double)(yP3-yP1) / (yM3-yM1) ;			//d
+		valeursMatPassage1[1][0] = 0 ;										//c
+		valeursDecalage1  [1][0] = -yM2 ;									//f
+		
+		//valeursMatPassage1 = {{a,b},{c,d}} ;
+		//valeursDecalage1 = {{e},{f}} ;
+		matPassage1 = new Matrice(valeursMatPassage1) ;
+		decalage1 = new Matrice(valeursDecalage1) ;
+		
+		matPassage2 = matPassage1.inverse() ;
+		decalage2 = decalage1.multiplier(-1) ;
 	}
 	
 }

@@ -2,9 +2,11 @@ import global.Global;
 import graphique.Fenetre;
 import objetsJeux.Platform;
 import objetsMathematiques.Conversions;
+import objetsMathematiques.Matrice;
 
 public class Main {
 	public static void main(String[] args){
+		
 		Global.g = 9.81 ;
 		Global.rho = 1.225 ;
 		Global.persoChoisi = 0 ;
@@ -23,12 +25,19 @@ public class Main {
 		
 		while(true){
 			try {
-				Thread.sleep(1000) ;
+				Thread.sleep((long)(Global.dt*1000)) ; //temps physique entre chaque frame
 				Global.joueur.deplacement() ;
+				for(int i = 0 ; i < Global.listePlateformes.size() ; i++){
+					Global.listePlateformes.get(i).gererCollision(Global.joueur) ;
+				}
+				Global.xMinFenetreMetric = Global.joueur.xMin - Global.widthFenetreMetric / 2 ; //centre le joueur dans
+																									//la fenetre sur x
+				Global.yMinFenetreMetric = Global.joueur.yMin - Global.heightFenetreMetric / 2 ; //centre le joueur dans
+																									//la fenetre sur y
 				fenetre.zoneJeu.repaint() ;
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e.printStackTrace() ;
 			}
 		}
 	}

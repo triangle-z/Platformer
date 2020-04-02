@@ -46,15 +46,15 @@ public class RigidBody {
 		majTheta() ;
 		majFrottements() ;
 		sommeDesForces = poids.sommeVect(frottements) ;
-		System.out.println("Somme des forces : " + sommeDesForces) ;
+		//System.out.println("Somme des forces : " + sommeDesForces) ;
 		majAcceleration() ;
-		System.out.println("Acceleration : " + acceleration) ;
+		//System.out.println("Acceleration : " + acceleration) ;
 		majVitesse() ;
-		System.out.println("Vitesse : " + vitesse) ;
+		//System.out.println("Vitesse : " + vitesse) ;
 		majPosition() ;
-		System.out.println("Position : " + position) ;
+		//System.out.println("Position : " + position) ;
 
-		System.out.println() ;
+		//System.out.println() ;
 	}
 
 	public void majTheta(){
@@ -84,19 +84,8 @@ public class RigidBody {
 		position.modifierComposants(newX, newY) ;
 	}
 
-	public void gereCollision(boolean[] tabDetectionCollision, double choc) {
-		
-		double newVx = vitesse.getX() ;
-		double newVy = vitesse.getY() ;
-		
-		if(tabDetectionCollision[0] || tabDetectionCollision[1]){ //choc en haut ou en bas
-			newVy = - choc * vitesse.getY() ;
-		}
-		if(tabDetectionCollision[2] || tabDetectionCollision[3]){ //choc à droite ou à gauche
-			newVx = - choc * vitesse.getX() ;
-		}
-		
-		vitesse.modifierComposants(newVx, newVy) ;
+	public void forcePlacement(double x, double y) {
+		position.modifierComposants(x, y);
 	}
 	
 	public void deplaceDroite(){

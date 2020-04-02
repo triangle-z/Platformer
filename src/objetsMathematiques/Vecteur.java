@@ -83,6 +83,14 @@ public class Vecteur {
 		return y;
 	}
 	
+	public double getXTemp() {
+		return xTemp;
+	}
+
+	public double getYTemp() {
+		return yTemp;
+	}
+	
 	public Vecteur deriveVecteur(){
 		double dx = deriveX() ;
 		double dy = deriveY() ;

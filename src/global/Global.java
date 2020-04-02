@@ -33,4 +33,5 @@ public class Global {
 	
 	public static int nbRepetitionsDichotomie = 100 ; //lors d'une collision, le placement dichotomique sera repete tant de fois
 	
+	public static Platform derniereCollision = new Platform(0, 0, 0, 0, 0) ;
 }

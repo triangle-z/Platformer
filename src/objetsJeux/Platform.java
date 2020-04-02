@@ -67,7 +67,8 @@ public class Platform extends Component{
 		} 
 		if(coteCollision[2] || coteCollision[3]){
 			joueur.rb.vitesse.modifierComposants(joueur.rb.vitesse.getX(), 0) ;	
-			joueur.rb.contactBas = true ;		
+			joueur.rb.contactBas = true ;
+			Global.derniereCollision = this ;
 		}
 	}
 	

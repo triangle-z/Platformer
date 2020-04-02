@@ -33,7 +33,7 @@ public abstract class Component {
 		
 		int nb = Global.persoChoisi ; // pour alléger la ligne suivante
 		rb = new RigidBody(position, vitesse, Global.g, Global.masse[nb], Global.Cx[nb], Global.rho, Global.surface[nb],
-				Global.longueurJambeRepos[nb], Global.longueurJambeContractee[nb], Global.raideur[nb]) ;
+				Global.longueurJambeRepos[nb], Global.longueurJambeContractee[nb], Global.raideur[nb], width, height) ;
 	}
 	
 	public void deplaceDroite(){

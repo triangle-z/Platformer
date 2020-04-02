@@ -20,9 +20,14 @@ public class RigidBody {
 	private double longueurJambeContractee ;			//a modeliserles jambes
 	private double raideur ;							//par un ressort propulsant le corps
 	
+	private double width ;
+	private double height ;
+	
 	
 	public RigidBody(Vecteur aPosition, Vecteur aVitesse, double aG, double aMasse, double aCx,
-			double aRho, double aSurface, double aLongueurJambeRepos, double aLongueurJambeContractee, double aRaideur) {
+			double aRho, double aSurface, double aLongueurJambeRepos, double aLongueurJambeContractee, double aRaideur, double aWidth, double aHeight) {
+		width = aWidth ;
+		height = aHeight ;
 		position = aPosition;
 		majTheta() ;
 		vitesse = aVitesse;
@@ -48,7 +53,11 @@ public class RigidBody {
 		majFrottements() ;
 		sommeDesForces = poids.sommeVect(frottements) ;
 		if(contactBas){
-			sommeDesForces.y = 0 ;
+			if(Global.derniereCollision.xMax > position.x && Global.derniereCollision.xMin < position.x + width){
+				sommeDesForces.y = 0 ;
+			} else {
+				contactBas = false ;
+			}
 		}
 		//System.out.println("Somme des forces : " + sommeDesForces) ;
 		majAcceleration() ;
@@ -94,12 +103,10 @@ public class RigidBody {
 	
 	public void deplaceDroite(){
 		vitesse.modifierComposants(vitesse.getX() + 10, 0) ;
-		contactBas = false ;
 	}
 	
 	public void deplaceGauche(){
 		vitesse.modifierComposants(vitesse.getX() - 10, 0) ;
-		contactBas = false ;
 	}
 	
 }

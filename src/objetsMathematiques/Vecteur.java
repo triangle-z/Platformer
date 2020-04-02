@@ -4,9 +4,9 @@ import global.Global;
 public class Vecteur {
 	
 	//coordonnees actuelles		(à t)
-	private double x ;
+	public double x ;
 
-	private double y ;
+	public double y ;
 	
 	//coordonnees précédentes	(à t-dt)
 	private double xTemp ;

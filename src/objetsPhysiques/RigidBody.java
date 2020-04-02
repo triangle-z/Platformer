@@ -5,7 +5,7 @@ import global.Global; ;
 public class RigidBody {
 	public Vecteur position ;
 	private double theta ;						//angle formé par le Vecteur position
-	private Vecteur vitesse ;
+	public Vecteur vitesse ;
 	private Vecteur acceleration ;
 	private Vecteur sommeDesForces ;
 	private double g ;							//constante d'acceleration de la gravite 
@@ -15,7 +15,7 @@ public class RigidBody {
 	private Vecteur frottements ;
 	private double rho ;						//masse volumique du fluide dans lequel le personnage est
 	private double surface ;					//surface qui va subir les frottements 
-														//(section plane maximale orthogonale au saut)
+	public boolean contactBas ;													//(section plane maximale orthogonale au saut)
 	private double longueurJambeRepos ;			//données pour le saut servant
 	private double longueurJambeContractee ;			//a modeliserles jambes
 	private double raideur ;							//par un ressort propulsant le corps
@@ -39,6 +39,7 @@ public class RigidBody {
 		frottements = new Vecteur(0, 0) ;
 		majFrottements() ;
 		majFrottements() ; //deux fois pour reinitialiser xTemp et yTemp
+		contactBas = false ;
 		sommeDesForces = poids.sommeVect(frottements) ;
 	}
 	
@@ -46,6 +47,9 @@ public class RigidBody {
 		majTheta() ;
 		majFrottements() ;
 		sommeDesForces = poids.sommeVect(frottements) ;
+		if(contactBas){
+			sommeDesForces.y = 0 ;
+		}
 		//System.out.println("Somme des forces : " + sommeDesForces) ;
 		majAcceleration() ;
 		//System.out.println("Acceleration : " + acceleration) ;
@@ -90,10 +94,12 @@ public class RigidBody {
 	
 	public void deplaceDroite(){
 		vitesse.modifierComposants(vitesse.getX() + 10, 0) ;
+		contactBas = false ;
 	}
 	
 	public void deplaceGauche(){
 		vitesse.modifierComposants(vitesse.getX() - 10, 0) ;
+		contactBas = false ;
 	}
 	
 }

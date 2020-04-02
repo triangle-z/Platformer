@@ -38,11 +38,13 @@ public class Platform extends Component{
 		double yGauche = joueur.rb.position.getYTemp() ;
 		double xDroit = joueur.rb.position.getX() ;
 		double yDroit = joueur.rb.position.getY() ;
+		double xMilieu = 0 ;
+		double yMilieu = 0 ;
 		int i = 0 ;
 		
-		while (i < Global.nbRepetitionsDichotomie){
-			double xMilieu = (xGauche + xDroit) / 2 ;
-			double yMilieu = (yGauche + yDroit) / 2 ;
+		while (i < Global.nbRepetitionsDichotomie || detecterCollision(joueur)){
+			xMilieu = (xGauche + xDroit) / 2 ;
+			yMilieu = (yGauche + yDroit) / 2 ;
 			joueur.forcePlacement(xMilieu, yMilieu) ;
 			if(detecterCollision(joueur)){
 				xDroit = xMilieu ;
@@ -53,6 +55,42 @@ public class Platform extends Component{
 			}
 			i++ ;
 		}
+		
+		joueur.forcePlacement(xMilieu, yMilieu) ;
+		
+		//System.out.println("fini") ;
+		
+		boolean[] coteCollision = trouverCoteCollision(joueur) ;
+		
+		if(coteCollision[0] || coteCollision[1]){
+			joueur.rb.vitesse.modifierComposants(0, joueur.rb.vitesse.getY()) ;
+		} 
+		if(coteCollision[2] || coteCollision[3]){
+			joueur.rb.vitesse.modifierComposants(joueur.rb.vitesse.getX(), 0) ;	
+			joueur.rb.contactBas = true ;		
+		}
+	}
+	
+	public boolean[] trouverCoteCollision(Joueur joueur) {
+		boolean[] tabDetectionCollision = new boolean[4] ;
+		tabDetectionCollision[0] = joueur.xMin + joueur.width 	<= xMin				;	// le joueur touche le côté gauche	de la plateforme
+		tabDetectionCollision[1] = joueur.xMin 					>= xMin + width		;	// le joueur touche le côté droit	de la plateforme
+		tabDetectionCollision[2] = joueur.yMin + joueur.height 	<= yMin 			;	// le joueur touche le côté bas		de la plateforme
+		tabDetectionCollision[3] = joueur.yMin 					>= yMin + height	;	// le joueur touche le côté haut	de la plateforme
+		
+		/*if(tabDetectionCollision[0]){
+			System.out.println("gauche") ;
+		}
+		if(tabDetectionCollision[1]){
+			System.out.println("droite") ;
+		}
+		if(tabDetectionCollision[2]){
+			System.out.println("bas") ;
+		}
+		if(tabDetectionCollision[3]){
+			System.out.println("haut") ;
+		}*/
+		return tabDetectionCollision ;
 	}
 
 	public void dessin(Graphics g) {

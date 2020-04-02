@@ -35,6 +35,7 @@ public class Main {
 				Global.yMinFenetreMetric = Global.joueur.yMin - Global.heightFenetreMetric / 2 ; //centre le joueur dans
 																									//la fenetre sur y
 				fenetre.zoneJeu.repaint() ;
+				System.out.println(Global.joueur.rb.vitesse) ;
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace() ;

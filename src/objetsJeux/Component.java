@@ -10,7 +10,7 @@ import objetsPhysiques.RigidBody ;
 
 public abstract class Component {
 	
-	protected RigidBody rb ;
+	public RigidBody rb ;
 	
 	public double xMin;
 	public double xMax;

@@ -121,6 +121,7 @@ public class RigidBody {
 			vitesse.modifierComposants(/*vitesse.getX() +*/ 10, vitesse.getY()) ;
 			contactGauche = false ;
 		}
+		Global.joueurG.cycle = 1 ;
 	}
 	
 	public void deplaceGauche(){
@@ -128,12 +129,14 @@ public class RigidBody {
 			vitesse.modifierComposants(/*vitesse.getX()*/ - 10, vitesse.getY()) ;
 			contactDroit = false ;
 		}
+		Global.joueurG.cycle = 1 ;
 	}
 	
 	public void arreteDeplace(){
 		//if(contactBas){
 			vitesse.modifierComposants(0, vitesse.getY()) ;
 		//}
+			Global.joueurG.cycle = 0 ;
 	}
 	
 	
@@ -152,6 +155,7 @@ public class RigidBody {
 				contactBas = false ;
 			}
 		}
+		Global.joueurG.cycle = 2 ;
 	}
 	
 }

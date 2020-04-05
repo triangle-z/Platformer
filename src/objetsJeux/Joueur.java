@@ -31,6 +31,7 @@ public class Joueur extends Component{
 		super.deplacement() ;
 		
 		Global.camera.setCentre(xMin, yMin);
+		
 	}
 
 	public void dessin(Graphics g) {

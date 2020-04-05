@@ -4,8 +4,8 @@ import global.Global;
 
 public class Conversions {
 
-	public static int widthFenetrePixel = 720 ;
-	public static int heightFenetrePixel = - 400 ;
+	public static int widthFenetrePixel = 1280 ;
+	public static int heightFenetrePixel = - 960 ;
 	private static int xMinFenetrePixel = 0 ;
 	private static int yMinFenetrePixel = - heightFenetrePixel ;
 	

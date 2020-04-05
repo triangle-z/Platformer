@@ -3,6 +3,7 @@ package graphique.objets;
 import global.Global;
 import javafx.animation.AnimationTimer;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import objetsJeux.Component;
 import objetsJeux.Plateforme;
 
@@ -18,6 +19,9 @@ public class PlateformeG extends ComponentG {
 	public void replace(){
 		
 		majPosition() ; 
+	
+		forme = new Rectangle(width, height, Color.BLACK) ;
+		getChildren().add(forme) ;
 		
 		setTranslateX(xMin) ;
 		setTranslateY(yMax) ;

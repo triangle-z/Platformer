@@ -6,6 +6,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -19,26 +21,32 @@ public class JoueurG extends ComponentG{
 	
 	long timePrecedent ;
 	Joueur j ;
+	public int cycle ; //0 --> stand, 1 --> run, 2 --> jump
+	int loop ;
+	Image imageJoueur ;
+	ImageView imageViewJoueur ;
 
 	public JoueurG(Component component) {
 		super(component, Color.WHITE);
 		// TODO Auto-generated constructor stub
 		
-		/*Translate rotation = new Translate(0, width);
-		forme.getTransforms().add(rotation);
-		
-		int i = 0 ;
-		Timeline timeline = new Timeline();
-        timeline.getKeyFrames().addAll(
-            new KeyFrame(Duration.ZERO, new KeyValue(rotation.xProperty(), 10)),
-            new KeyFrame(new Duration(1000), new KeyValue(rotation.xProperty(), 20))
-        );
-        timeline.setAutoReverse(false);
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();*/
-		
 		j = (Joueur) component ;
 		requestFocus();
+
+		System.out.println(xMin + " " + yMin + " " + width + " " + height) ;
+		
+		cycle = 0 ;
+		
+		loop = 0 ;
+		
+		imageJoueur = new Image(Global.URLsStandUp[loop]) ;
+		imageViewJoueur = new ImageView(imageJoueur) ;
+		imageViewJoueur.setFitHeight(height) ;
+		imageViewJoueur.setFitWidth(width) ;
+		imageViewJoueur.setX(0) ;
+		imageViewJoueur.setY(0) ;
+		
+		getChildren().add(imageViewJoueur) ;
 		
 		setOnKeyPressed (new EventHandler<KeyEvent>(){
             public void handle(KeyEvent ke){
@@ -106,6 +114,31 @@ public class JoueurG extends ComponentG{
 		public void doHandle(long now){
 			
 			joueur.deplace() ;
+			
+			loop++ ;
+			
+			if(cycle == 0){
+				if(loop > 0){
+					loop = 0 ;
+				}
+				imageJoueur = new Image(Global.URLsStandUp[loop]) ;
+			} else {
+				if(cycle == 1){
+					if(loop > 5){
+						loop = 0 ;
+					}
+					imageJoueur = new Image(Global.URLsRunCycle[loop]) ;
+				} else {
+					if(cycle == 2){
+						if(loop > 4){
+							loop = 0 ;
+						}
+						imageJoueur = new Image(Global.URLsJumpCycle[loop]) ;
+					}
+				}
+			}
+			
+			imageViewJoueur.setImage(imageJoueur);
 			
 			/*try {
 				Thread.sleep(1);

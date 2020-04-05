@@ -24,9 +24,6 @@ public class ComponentG extends Parent{
 		
 		this.component = component ;
 		majPosition() ;
-	
-		forme = new Rectangle(width, height, couleur) ;
-		getChildren().add(forme) ;
 		
 		setTranslateX(xMin) ;
 		setTranslateY(yMax);

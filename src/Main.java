@@ -1,10 +1,14 @@
 import global.Global;
+import graphique.conteneurs.Credits;
+import graphique.conteneurs.Menu;
 import graphique.conteneurs.Planet;
 import graphique.objets.Camera;
 import graphique.objets.JoueurG;
 import graphique.objets.PlateformeG;
 import javafx.application.Application;
 import javafx.scene.Group;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import objetsJeux.Joueur;
@@ -22,6 +26,21 @@ public class Main extends Application {
 		double[] tab1 = {0, -1} ;
 		//Conversions.metricToPixel(tab1) ;
 		double[] tab2 = {10, 1} ;
+ 		
+ 		Global.URLsStandUp = new String[Global.nbStandUp] ;
+ 		for(int i = 1 ; i <= Global.nbStandUp ; i++){
+ 			Global.URLsStandUp[i - 1] = Global.URLStandUp + i + ".png" ;
+ 		}
+ 		
+ 		Global.URLsRunCycle = new String[Global.nbRunCycle] ;
+ 		for(int i = 1 ; i <= Global.nbRunCycle ; i++){
+ 			Global.URLsRunCycle[i - 1] = Global.URLRunCycle + i + ".png" ;
+ 		}
+ 		
+ 		Global.URLsJumpCycle = new String[Global.nbJumpCycle] ;
+ 		for(int i = 1 ; i <= Global.nbJumpCycle ; i++){
+ 			Global.URLsJumpCycle[i - 1] = Global.URLJumpCycle + i + ".jpg" ;
+ 		}
 		
 		Global.camera = new Camera(0, 0, Global.widthFenetreMetric, Global.heightFenetreMetric) ;
 		
@@ -60,23 +79,11 @@ public class Main extends Application {
 		Global.listePlateformes .add(plateforme6 ) ;
 		Global.listePlateformesG.add(plateforme6G) ;
 		
-		/*while(true){
-			try {
-				Thread.sleep((long)(Global.dt*1000)) ; //temps physique entre chaque frame
-				Global.joueur.deplacement() ;
-				for(int i = 0 ; i < Global.listePlateformes.size() ; i++){
-					Global.listePlateformes.get(i).gererCollision(Global.joueur) ;
-				}
-				Global.xMinFenetreMetric = Global.joueur.xMin - Global.widthFenetreMetric / 2 ; //centre le joueur dans
-																									//la fenetre sur x
-				Global.yMinFenetreMetric = Global.joueur.yMin - Global.heightFenetreMetric / 2 ; //centre le joueur dans
-																									//la fenetre sur y
-				fenetre.zoneJeu.repaint() ;
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace() ;
-			}
-		}*/
+		Group root1 = new Group() ;
+ 		Global.credits = new Credits(root1, Conversions.widthFenetrePixel, - Conversions.heightFenetrePixel) ;
+ 		
+		Group root2 = new Group() ;
+ 		Global.planete = new Planet(root2, Conversions.widthFenetrePixel, - Conversions.heightFenetrePixel) ;
 		
         Application.launch(Main.class, args);
     }
@@ -87,9 +94,11 @@ public class Main extends Application {
 		// TODO Auto-generated method stub
 
         primaryStage.setTitle("Little Gravity");
-        Group root = new Group();
-        Planet scene = new Planet(root, Conversions.widthFenetrePixel, - Conversions.heightFenetrePixel);        
-        primaryStage.setScene(scene);
+        
+		VBox root = new VBox() ; // Premier �l�ment de la scene qui va contenir les boutons.
+        Global.menu = new Menu(root, Conversions.widthFenetrePixel, - Conversions.heightFenetrePixel, primaryStage) ;
+        
+        primaryStage.setScene(Global.menu);
         primaryStage.show();
 	}
 	

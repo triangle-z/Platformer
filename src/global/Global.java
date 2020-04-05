@@ -1,6 +1,9 @@
 package global;
 import java.util.LinkedList;
 
+import graphique.conteneurs.Credits;
+import graphique.conteneurs.Menu;
+import graphique.conteneurs.Planet;
 import graphique.objets.Camera;
 import graphique.objets.JoueurG;
 import graphique.objets.PlateformeG;
@@ -37,13 +40,30 @@ public class Global {
 	public static LinkedList<PlateformeG> listePlateformesG = new LinkedList<PlateformeG>() ;
 	
 	public static double xMinFenetreMetric = -10 ;
-	public static double yMinFenetreMetric = -10 ;
+	public static double yMinFenetreMetric = -12.5 ;
 	public static double widthFenetreMetric = 20 ;
-	public static double heightFenetreMetric = 20 ;
+	public static double heightFenetreMetric = 25 ;
 	
 	public static int nbRepetitionsDichotomie = 100 ; //lors d'une collision, le placement dichotomique sera repete tant de fois
 	
 	public static Plateforme derniereCollisionBas    = new Plateforme(0, 0, 0, 0, 0) ;
 	public static Plateforme derniereCollisionDroit = new Plateforme(0, 0, 0, 0, 0) ;
 	public static Plateforme derniereCollisionGauche = new Plateforme(0, 0, 0, 0, 0) ;
+	
+	public static Menu menu ;
+	public static Planet planete ;
+	public static Credits credits ;
+	
+	public static String[] URLsMenu = {"Medias/image/menu/play_button.png", "Medias/image/menu/tutorial_button.png", "Medias/image/menu/credits_button.png"} ;
+	
+	public static int nbStandUp   = 1 ;
+	public static String URLStandUp    = "Medias/image/main_character/stand_up/"   ;
+	public static String[] URLsStandUp   ;
+	public static int nbRunCycle  = 6 ;
+	public static String URLRunCycle   = "Medias/image/main_character/run_cycle/"  ;
+	public static String[] URLsRunCycle  ;
+	public static int nbJumpCycle = 5 ;
+	public static String URLJumpCycle  = "Medias/image/main_character/jump_cycle/" ;
+	public static String[] URLsJumpCycle ;
+
 }

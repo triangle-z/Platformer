@@ -32,8 +32,12 @@ public abstract class Component {
 		Vecteur vitesse  = new Vecteur(0, 0) ;
 		
 		int nb = Global.persoChoisi ; // pour alléger la ligne suivante
-		rb = new RigidBody(position, vitesse, Global.g, Global.masse[nb], Global.Cx[nb], Global.rho, Global.surface[nb],
+		rb = new RigidBody(position, vitesse, Global.masse[nb], Global.Cx[nb], Global.surface[nb],
 				Global.longueurJambeRepos[nb], Global.longueurJambeContractee[nb], Global.raideur[nb], width, height) ;
+	}
+	
+	public Component(Vecteur posMin, double width, double height){
+		this(posMin.x, posMin.y, width, height) ;
 	}
 	
 	public void deplaceDroite(){
@@ -44,10 +48,20 @@ public abstract class Component {
 		rb.deplaceGauche() ;
 	}
 	
+	public void arreteDeplace(){
+		rb.arreteDeplace() ;
+	}
+	
+	public void saute(){
+		rb.saute() ;
+	}
+	
 	public void deplacement(){
 		rb.deplacement() ;
 		xMin = rb.position.getX() ;
 		yMin = rb.position.getY() ;
+		xMax = xMin + width ;
+		yMax = yMin + height ;
 	}
 	
 	public abstract void dessin(Graphics g) ;

@@ -8,14 +8,15 @@ public class RigidBody {
 	public Vecteur vitesse ;
 	private Vecteur acceleration ;
 	private Vecteur sommeDesForces ;
-	private double g ;							//constante d'acceleration de la gravite 
 	private double masse ;
 	private double Cx ;							//coefficient de trainee du corps
 	private Vecteur poids ;
 	private Vecteur frottements ;
-	private double rho ;						//masse volumique du fluide dans lequel le personnage est
 	private double surface ;					//surface qui va subir les frottements 
-	public boolean contactBas ;													//(section plane maximale orthogonale au saut)
+													//(section plane maximale orthogonale au saut)
+	public boolean contactBas ;
+	public boolean contactDroit ;
+	public boolean contactGauche ;
 	private double longueurJambeRepos ;			//données pour le saut servant
 	private double longueurJambeContractee ;			//a modeliserles jambes
 	private double raideur ;							//par un ressort propulsant le corps
@@ -24,19 +25,16 @@ public class RigidBody {
 	private double height ;
 	
 	
-	public RigidBody(Vecteur aPosition, Vecteur aVitesse, double aG, double aMasse, double aCx,
-			double aRho, double aSurface, double aLongueurJambeRepos, double aLongueurJambeContractee, double aRaideur, double aWidth, double aHeight) {
+	public RigidBody(Vecteur aPosition, Vecteur aVitesse, double aMasse, double aCx, double aSurface, double aLongueurJambeRepos, double aLongueurJambeContractee, double aRaideur, double aWidth, double aHeight) {
 		width = aWidth ;
 		height = aHeight ;
 		position = aPosition;
 		majTheta() ;
 		vitesse = aVitesse;
 		acceleration = new Vecteur(0, 0) ; //inutile de préciser une acceleration initiale
-		g = aG;
 		masse = aMasse;
-		poids = new Vecteur(0, - masse * g) ;
+		poids = new Vecteur(0, - masse * Global.g) ;
 		Cx = aCx;
-		rho = aRho;
 		surface = aSurface;
 		longueurJambeRepos = aLongueurJambeRepos;
 		longueurJambeContractee = aLongueurJambeContractee;
@@ -45,6 +43,8 @@ public class RigidBody {
 		majFrottements() ;
 		majFrottements() ; //deux fois pour reinitialiser xTemp et yTemp
 		contactBas = false ;
+		contactDroit = false ;
+		contactGauche = false ;
 		sommeDesForces = poids.sommeVect(frottements) ;
 	}
 	
@@ -53,7 +53,7 @@ public class RigidBody {
 		majFrottements() ;
 		sommeDesForces = poids.sommeVect(frottements) ;
 		if(contactBas){
-			if(Global.derniereCollision.xMax > position.x && Global.derniereCollision.xMin < position.x + width){
+			if(Global.derniereCollisionBas.xMax > position.x && Global.derniereCollisionBas.xMin < position.x + width){
 				sommeDesForces.y = 0 ;
 			} else {
 				contactBas = false ;
@@ -63,6 +63,21 @@ public class RigidBody {
 		majAcceleration() ;
 		//System.out.println("Acceleration : " + acceleration) ;
 		majVitesse() ;
+		if(contactDroit){
+			if(Global.derniereCollisionDroit.yMax > position.y && Global.derniereCollisionDroit.yMin < position.y + height){
+				vitesse.x = 0 ;
+			} else {
+				contactDroit = false ;
+			}
+		}
+
+		if(contactGauche){
+			if(Global.derniereCollisionGauche.yMax > position.y && Global.derniereCollisionGauche.yMin < position.y + height){
+				vitesse.x = 0 ;
+			} else {
+				contactGauche = false ;
+			}
+		}
 		//System.out.println("Vitesse : " + vitesse) ;
 		majPosition() ;
 		//System.out.println("Position : " + position) ;
@@ -75,7 +90,7 @@ public class RigidBody {
 	}
 	
 	public void majFrottements(){
-		double resistance = 0.5 * Cx * rho * surface * Math.pow(vitesse.getModule(), 2) ;
+		double resistance = 0.5 * Cx * Global.rho * surface * Math.pow(vitesse.getModule(), 2) ;
 		double frottementX = resistance * Math.cos(theta) ;
 		double frottementY = resistance * Math.sin(theta) ;
 		frottements.modifierComposants(frottementX, frottementY) ;
@@ -102,11 +117,41 @@ public class RigidBody {
 	}
 	
 	public void deplaceDroite(){
-		vitesse.modifierComposants(vitesse.getX() + 10, 0) ;
+		if(!contactDroit){
+			vitesse.modifierComposants(/*vitesse.getX() +*/ 10, vitesse.getY()) ;
+			contactGauche = false ;
+		}
 	}
 	
 	public void deplaceGauche(){
-		vitesse.modifierComposants(vitesse.getX() - 10, 0) ;
+		if(!contactGauche){
+			vitesse.modifierComposants(/*vitesse.getX()*/ - 10, vitesse.getY()) ;
+			contactDroit = false ;
+		}
+	}
+	
+	public void arreteDeplace(){
+		//if(contactBas){
+			vitesse.modifierComposants(0, vitesse.getY()) ;
+		//}
+	}
+	
+	
+	
+	public void saute(){
+		if(contactDroit || contactGauche){
+			vitesse.modifierComposants(0, 10) ;
+			contactBas = false ;
+		} else {
+			if(contactBas){
+				double vsCarre = longueurJambeContractee - longueurJambeRepos ;
+				vsCarre *= raideur * (longueurJambeContractee - longueurJambeRepos) - masse * Global.g ;
+				vsCarre /= masse + (longueurJambeContractee - longueurJambeRepos) * Cx * Global.rho * surface ;
+				vitesse.modifierComposants(vitesse.getX(), Math.sqrt(Math.abs(vsCarre))) ;
+				//vitesse.modifierComposants(vitesse.getX(), 6.935) ;
+				contactBas = false ;
+			}
+		}
 	}
 	
 }

@@ -82,12 +82,19 @@ public class Conversions {
 	
 	private static void majMatrices(){
 	
-		xM1 = Global.xMinFenetreMetric ;
+		/*xM1 = Global.xMinFenetreMetric ;
 		xM2 = Global.xMinFenetreMetric ;
 		xM3 = Global.xMinFenetreMetric + Global.widthFenetreMetric ;
 		yM1 = Global.yMinFenetreMetric ;
 		yM2 = Global.yMinFenetreMetric + Global.heightFenetreMetric ;
-		yM3 = Global.yMinFenetreMetric + Global.heightFenetreMetric ;
+		yM3 = Global.yMinFenetreMetric + Global.heightFenetreMetric ;*/
+		
+		xM1 = Global.camera.xMin ;
+		xM2 = Global.camera.xMin ;
+		xM3 = Global.camera.xMin + Global.camera.width ;
+		yM1 = Global.camera.yMin ;
+		yM2 = Global.camera.yMin + Global.camera.height ;
+		yM3 = Global.camera.yMin + Global.camera.height ;
 		
 		valeursMatPassage1[0][1] = 0 ;										//b
 		valeursMatPassage1[0][0] = (double)(xP3-xP1) / (xM3-xM1) ;			//a

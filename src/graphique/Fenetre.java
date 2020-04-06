@@ -11,7 +11,7 @@ import objetsMathematiques.Conversions;
 
 public class Fenetre extends JFrame {
 
-	private ZoneJeu zoneJeu;
+	public ZoneJeu zoneJeu;
 
 	public Fenetre() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

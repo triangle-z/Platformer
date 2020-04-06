@@ -247,6 +247,7 @@ public class Matrice {
 	public Matrice multiplier(Matrice M) { // Effectue le produit this*M, et non
 											// pas M*this
 		if (this.p == M.n) {
+			//System.out.println("MULTIPLICATION")
 			Matrice Res = new Matrice(this.n, M.p);
 			for (int i = 0; i < Res.n; i++) {
 				for (int j = 0; j < Res.p; j++) { // on parcourt chaque case de
@@ -398,9 +399,25 @@ public class Matrice {
 		}
 	}
 
-	public Matrice transformationAffine(Matrice a, Matrice b) {
+	public Matrice transformationAffineInterne(Matrice a, Matrice b) { //
+		Matrice res = a.multiplier(this.additionner(b));
+		return res;
+	}
+
+	public Matrice transformationAffineExterne(Matrice a, Matrice b) {
 		Matrice res = a.multiplier(this);
 		return res.additionner(b);
+	}
+	
+	public String toString(){
+		String res = "" ;
+		for(int i = 0 ; i < tab.length ; i++){
+			for(int j = 0 ; j < tab[0].length ; j++){
+				res += tab[i][j] + "  " ;
+			}
+			res += "\n" ;
+		}
+		return res ;
 	}
 
 }

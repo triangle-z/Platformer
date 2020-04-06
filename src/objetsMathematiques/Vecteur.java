@@ -4,9 +4,9 @@ import global.Global;
 public class Vecteur {
 	
 	//coordonnees actuelles		(à t)
-	private double x ;
+	public double x ;
 
-	private double y ;
+	public double y ;
 	
 	//coordonnees précédentes	(à t-dt)
 	private double xTemp ;
@@ -83,6 +83,14 @@ public class Vecteur {
 		return y;
 	}
 	
+	public double getXTemp() {
+		return xTemp;
+	}
+
+	public double getYTemp() {
+		return yTemp;
+	}
+	
 	public Vecteur deriveVecteur(){
 		double dx = deriveX() ;
 		double dy = deriveY() ;
@@ -137,4 +145,8 @@ public class Vecteur {
 		return produit ;
 	}
 	
+	public String toString(){
+		String res = "{x = " + x + " ; y = " + y + "}" ;
+		return res ;
+	}
 }

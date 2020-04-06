@@ -1,5 +1,8 @@
 package graphique.conteneurs;
 
+import java.io.File;
+import java.nio.file.Paths;
+
 import global.Global;
 import graphique.objets.Bouton;
 import javafx.event.ActionEvent;
@@ -18,6 +21,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
@@ -41,9 +45,14 @@ public class Menu extends Scene implements EventHandler<ActionEvent>{
 		BackgroundSize bs = new BackgroundSize(1280, 960, false, false, false, true) ;
 		BackgroundImage BackGround = new BackgroundImage(iB, null, null, null, bs);
 		root.setBackground(new Background(BackGround));// on impl�mente le Background
-		
-		//h = new Media("Medias/son/music1.mp3") ;
+
+		//File f = new File("music1.mp3") ;
+		//System.out.println(f.exists()) ;
+		//h = new Media(new File("Medias/image/music1.mp3").toURI().toString()) ;
 		//mediaplayer = new MediaPlayer(h); 
+		//AudioClip ac = new AudioClip(new File("Medias/image/music1.mp3").toURI().toString()) ;
+		//AudioClip ac = new AudioClip("music1.mp3") ;
+		//ac.play();
 		
 		root.setAlignment(Pos.TOP_CENTER) ;// on aligne les �l�ments de root de sorte � ce qu''ils soient au centre 
 		root.setSpacing(-10);// on impose un espacement entre les nods (�l�ments) de Vbox de 100 pixels
